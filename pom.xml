@@ -90,7 +90,7 @@
             </dependency>
             <dependency>
                 <groupId>com.adplatform</groupId>
-                <artifactId>ad-platform-common</artifactId>
+                <artifactId>ad-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
