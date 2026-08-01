@@ -1,6 +1,7 @@
 package com.adplatform.adsponsor.service;
 
 import com.adplatform.adsponsor.entity.AdPlan;
+import com.adplatform.adsponsor.vo.request.AdPlanGetRequest;
 import com.adplatform.adsponsor.vo.request.AdPlanRequest;
 import com.adplatform.adsponsor.vo.response.AdPlanResponse;
 import com.adplatform.common.exception.AdException;
@@ -17,7 +18,7 @@ public interface IAdPlanService {
     /**
      * 获取推广计划
      */
-    List<AdPlan> getAdPlanByIds(AdPlanRequest request) throws AdException;
+    List<AdPlan> getAdPlanByIds(AdPlanGetRequest request) throws AdException;
 
     /**
      * 更新推广计划

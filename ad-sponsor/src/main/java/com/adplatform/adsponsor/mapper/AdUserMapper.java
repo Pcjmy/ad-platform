@@ -10,4 +10,9 @@ public interface AdUserMapper extends BaseMapper<AdUser> {
         return selectOne(new LambdaQueryWrapper<AdUser>()
                 .eq(AdUser::getUsername, username));
     }
+
+    default AdUser findById(Long id) {
+        return selectOne(new LambdaQueryWrapper<AdUser>()
+                .eq(AdUser::getId, id));
+    }
 }
