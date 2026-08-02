@@ -8,6 +8,11 @@ import java.util.List;
 
 public interface AdPlanMapper extends BaseMapper<AdPlan> {
 
+    default AdPlan findById(Long id) {
+        return selectOne(new LambdaQueryWrapper<AdPlan>()
+                .eq(AdPlan::getId, id));
+    }
+
     default AdPlan findByIdAndUserId(Long id, Long userId) {
         return selectOne(new LambdaQueryWrapper<AdPlan>()
                 .eq(AdPlan::getId, id)
