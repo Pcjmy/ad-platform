@@ -18,4 +18,8 @@ public interface AdUnitMapper extends BaseMapper<AdUnit> {
         return selectList(new LambdaQueryWrapper<AdUnit>()
                 .eq(AdUnit::getUnitStatus, unitStatus));
     }
+
+    default List<AdUnit> findAllById(List<Long> ids) {
+        return selectByIds(ids);
+    }
 }
