@@ -35,7 +35,7 @@ public class Creative {
     private Integer width;
 
     @TableField("size")
-    private Integer size;
+    private Long size;
 
     @TableField("duration")
     private Integer duration;
