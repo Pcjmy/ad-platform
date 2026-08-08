@@ -1,13 +1,7 @@
 package com.adplatform.adsponsor.service;
 
-import com.adplatform.adsponsor.vo.request.AdUnitDistrictRequest;
-import com.adplatform.adsponsor.vo.request.AdUnitItRequest;
-import com.adplatform.adsponsor.vo.request.AdUnitKeywordRequest;
-import com.adplatform.adsponsor.vo.request.AdUnitRequest;
-import com.adplatform.adsponsor.vo.response.AdUnitDistrictResponse;
-import com.adplatform.adsponsor.vo.response.AdUnitItResponse;
-import com.adplatform.adsponsor.vo.response.AdUnitKeywordResponse;
-import com.adplatform.adsponsor.vo.response.AdUnitResponse;
+import com.adplatform.adsponsor.vo.request.*;
+import com.adplatform.adsponsor.vo.response.*;
 import com.adplatform.common.exception.AdException;
 
 public interface IAdUnitService {
@@ -21,5 +15,8 @@ public interface IAdUnitService {
         throws AdException;
 
     AdUnitDistrictResponse createUnitDistrict(AdUnitDistrictRequest request)
+        throws AdException;
+
+    CreativeUnitResponse createCreativeUnit(CreativeUnitRequest request)
         throws AdException;
 }

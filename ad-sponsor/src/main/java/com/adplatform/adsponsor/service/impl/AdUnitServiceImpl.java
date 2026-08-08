@@ -6,20 +6,17 @@ import com.adplatform.adsponsor.entity.AdUnit;
 import com.adplatform.adsponsor.entity.unit_condition.AdUnitDistrict;
 import com.adplatform.adsponsor.entity.unit_condition.AdUnitIt;
 import com.adplatform.adsponsor.entity.unit_condition.AdUnitKeyword;
+import com.adplatform.adsponsor.entity.unit_condition.CreativeUnit;
 import com.adplatform.adsponsor.mapper.AdPlanMapper;
 import com.adplatform.adsponsor.mapper.AdUnitMapper;
+import com.adplatform.adsponsor.mapper.CreativeMapper;
 import com.adplatform.adsponsor.mapper.unit_condition.AdUnitDistrictMapper;
 import com.adplatform.adsponsor.mapper.unit_condition.AdUnitItMapper;
 import com.adplatform.adsponsor.mapper.unit_condition.AdUnitKeywordMapper;
+import com.adplatform.adsponsor.mapper.unit_condition.CreativeUnitMapper;
 import com.adplatform.adsponsor.service.IAdUnitService;
-import com.adplatform.adsponsor.vo.request.AdUnitDistrictRequest;
-import com.adplatform.adsponsor.vo.request.AdUnitItRequest;
-import com.adplatform.adsponsor.vo.request.AdUnitKeywordRequest;
-import com.adplatform.adsponsor.vo.request.AdUnitRequest;
-import com.adplatform.adsponsor.vo.response.AdUnitDistrictResponse;
-import com.adplatform.adsponsor.vo.response.AdUnitItResponse;
-import com.adplatform.adsponsor.vo.response.AdUnitKeywordResponse;
-import com.adplatform.adsponsor.vo.response.AdUnitResponse;
+import com.adplatform.adsponsor.vo.request.*;
+import com.adplatform.adsponsor.vo.response.*;
 import com.adplatform.common.exception.AdException;
 import com.alibaba.nacos.common.utils.CollectionUtils;
 import org.springframework.stereotype.Service;
@@ -37,17 +34,23 @@ public class AdUnitServiceImpl implements IAdUnitService {
     private final AdUnitKeywordMapper unitKeywordMapper;
     private final AdUnitItMapper unitItMapper;
     private final AdUnitDistrictMapper unitDistrictMapper;
+    private final CreativeMapper creativeMapper;
+    private final CreativeUnitMapper creativeUnitMapper;
 
     public AdUnitServiceImpl(AdPlanMapper planMapper,
                              AdUnitMapper unitMapper,
                              AdUnitKeywordMapper unitKeywordMapper,
                              AdUnitItMapper unitItMapper,
-                             AdUnitDistrictMapper unitDistrictMapper) {
+                             AdUnitDistrictMapper unitDistrictMapper,
+                             CreativeMapper creativeMapper,
+                             CreativeUnitMapper creativeUnitMapper) {
         this.planMapper = planMapper;
         this.unitMapper = unitMapper;
         this.unitKeywordMapper = unitKeywordMapper;
         this.unitItMapper = unitItMapper;
         this.unitDistrictMapper = unitDistrictMapper;
+        this.creativeMapper = creativeMapper;
+        this.creativeUnitMapper = creativeUnitMapper;
     }
 
     @Override
@@ -138,10 +141,40 @@ public class AdUnitServiceImpl implements IAdUnitService {
         return new AdUnitDistrictResponse(ids);
     }
 
+    @Override
+    public CreativeUnitResponse createCreativeUnit(CreativeUnitRequest request) throws AdException {
+        List<Long> unitIds = request.getUnitItems().stream()
+                .map(CreativeUnitRequest.CreativeUnitItem::getCreativeId)
+                .toList();
+        List<Long> creativeIds = request.getUnitItems().stream()
+                .map(CreativeUnitRequest.CreativeUnitItem::getCreativeId)
+                .toList();
+        if (!(isRelatedUnitExist(unitIds) && isRelatedCreativeExist(creativeIds))) {
+            throw new AdException(Constants.ErrorMsg.REQUEST_PARAM_ERROR);
+        }
+        List<CreativeUnit> creativeUnits = new ArrayList<>();
+        request.getUnitItems().forEach(i -> creativeUnits.add(
+                new CreativeUnit(i.getCreativeId(), i.getUnitId())
+        ));
+        List<Long> ids = creativeUnitMapper.insertBatch(creativeUnits)
+                .stream()
+                .map(CreativeUnit::getId)
+                .toList();
+
+        return new CreativeUnitResponse(ids);
+    }
+
     private boolean isRelatedUnitExist(List<Long> unitIds) {
         if (CollectionUtils.isEmpty(unitIds)) {
             return false;
         }
         return unitMapper.findAllById(unitIds).size() == new HashSet<>(unitIds).size();
+    }
+
+    private boolean isRelatedCreativeExist(List<Long> creativeIds) {
+        if (CollectionUtils.isEmpty(creativeIds)) {
+            return false;
+        }
+        return creativeMapper.findAllById(creativeIds).size() == new HashSet<>(creativeIds).size();
     }
 }
