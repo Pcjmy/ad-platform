@@ -4,7 +4,7 @@ import com.adplatform.adsponsor.vo.request.CreateUserRequest;
 import com.adplatform.adsponsor.vo.response.CreateUserResponse;
 import com.adplatform.common.exception.AdException;
 
-public interface AdUserService {
+public interface IUserService {
 
     CreateUserResponse createUser(CreateUserRequest request) throws AdException;
 }
