@@ -6,7 +6,21 @@ server:
 spring:
   application:
     name: ad-sponsor
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/ad_platform?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    druid:
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
   cloud:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
