@@ -14,7 +14,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/adPlan")
+@RequestMapping("/ad-plan")
 public class AdPlanController {
 
     private final IAdPlanService adPlanService;

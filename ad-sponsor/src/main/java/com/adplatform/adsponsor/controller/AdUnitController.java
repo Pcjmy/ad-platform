@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/adunit")
+@RequestMapping("/ad-unit")
 public class AdUnitController {
 
     private final IAdUnitService adUnitService;
@@ -46,7 +46,7 @@ public class AdUnitController {
         return adUnitService.createUnitDistrict(request);
     }
 
-    @PostMapping("/creativeUnit/create")
+    @PostMapping("/creative-unit/create")
     public CreativeUnitResponse createCreativeUnit(@RequestBody CreativeUnitRequest request) throws AdException {
         log.info("ad-sponsor createCreativeUnit request: {}", JSON.toJSONString(request));
         return adUnitService.createCreativeUnit(request);

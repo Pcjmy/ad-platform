@@ -11,5 +11,14 @@ spring:
     gateway:
       discovery:
         locator:
-          enabled: true
-          lower-case-service-id: true
+          enabled: false
+      routes:
+        - id: ad-sponsor
+          uri: lb://ad-sponsor
+          predicates:
+            - Path=/rest/ad-sponsor/**
+          filters:
+            - StripPrefix=1
+      httpclient:
+        connect-timeout: 5000
+        response-timeout: 10s

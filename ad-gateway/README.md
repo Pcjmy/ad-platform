@@ -15,5 +15,5 @@
 sh startup.sh -m standalone
 
 # Windows
-cmd startup.cmd -m standalone
+startup.cmd -m standalone
 ```
