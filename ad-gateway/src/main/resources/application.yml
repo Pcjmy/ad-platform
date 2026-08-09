@@ -19,6 +19,12 @@ spring:
             - Path=/rest/ad-sponsor/**
           filters:
             - StripPrefix=1
+        - id: ad-search
+          uri: lb://ad-search
+          predicates:
+            - Path=/rest/ad-search/**
+          filters:
+            - StripPrefix=1
       httpclient:
         connect-timeout: 5000
         response-timeout: 10s
