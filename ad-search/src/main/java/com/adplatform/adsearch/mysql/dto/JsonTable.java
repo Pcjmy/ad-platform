@@ -23,5 +23,6 @@ public class JsonTable {
     @AllArgsConstructor
     public static class Column {
 
+        private String column;
     }
 }
