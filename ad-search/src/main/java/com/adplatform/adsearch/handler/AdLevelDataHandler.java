@@ -141,7 +141,7 @@ public class AdLevelDataHandler {
         );
     }
 
-    private static void handleLevel4(AdUnitItTable unitItTable, OpType type) {
+    public static void handleLevel4(AdUnitItTable unitItTable, OpType type) {
         if (type == OpType.UPDATE) {
             log.error("it index can not support update");
             return ;
