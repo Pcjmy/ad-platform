@@ -10,14 +10,18 @@ import com.adplatform.adsearch.index.creative.CreativeIndex;
 import com.adplatform.adsearch.index.creative.CreativeObject;
 import com.adplatform.adsearch.index.creative.CreativeUnitIndex;
 import com.adplatform.adsearch.index.creative.CreativeUnitObject;
+import com.adplatform.adsearch.index.district.UnitDistrictIndex;
+import com.adplatform.adsearch.index.interest.UnitItIndex;
+import com.adplatform.adsearch.index.keyword.UnitKeywordIndex;
 import com.adplatform.adsearch.mysql.constant.OpType;
 import com.adplatform.adsearch.utils.CommonUtils;
-import com.adplatform.common.dump.table.AdCreativeTable;
-import com.adplatform.common.dump.table.AdCreativeUnitTable;
-import com.adplatform.common.dump.table.AdPlanTable;
-import com.adplatform.common.dump.table.AdUnitTable;
+import com.adplatform.common.dump.table.*;
 import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 @Slf4j
 public class AdLevelDataHandler {
@@ -106,6 +110,79 @@ public class AdLevelDataHandler {
                         creativeUnitObject.getUnitId().toString()
                 ),
                 creativeUnitObject,
+                type
+        );
+    }
+
+    public static void handleLevel4(AdUnitDistrictTable unitDistrictTable, OpType type) {
+        if (type == OpType.UPDATE) {
+            log.error("district index can not support update");
+            return ;
+        }
+        AdUnitObject unitObject = DataTable.of(
+                AdUnitIndex.class
+        ).get(unitDistrictTable.getUnitId());
+        if (unitObject == null) {
+            log.error("AdUnitDistrictTable index error: {}", unitDistrictTable.getUnitId());
+            return ;
+        }
+        String key = CommonUtils.stringConcat(
+                unitDistrictTable.getProvince(),
+                unitDistrictTable.getCity()
+        );
+        Set<Long> value = new HashSet<>(
+                Collections.singleton(unitDistrictTable.getUnitId())
+        );
+        handleBinlogEvent(
+                DataTable.of(UnitDistrictIndex.class),
+                key,
+                value,
+                type
+        );
+    }
+
+    private static void handleLevel4(AdUnitItTable unitItTable, OpType type) {
+        if (type == OpType.UPDATE) {
+            log.error("it index can not support update");
+            return ;
+        }
+        AdUnitObject unitObject = DataTable.of(
+                AdUnitIndex.class
+        ).get(unitItTable.getUnitId());
+        if (unitObject == null) {
+            log.error("AdUnitItTable index error: {}", unitItTable.getUnitId());
+            return ;
+        }
+        Set<Long> value = new HashSet<>(
+                Collections.singleton(unitItTable.getUnitId())
+        );
+        handleBinlogEvent(
+                DataTable.of(UnitItIndex.class),
+                unitItTable.getItTag(),
+                value,
+                type
+        );
+    }
+
+    public static void handleLevel4(AdUnitKeywordTable keywordTable, OpType type) {
+        if (type == OpType.UPDATE) {
+            log.error("keyword index can not support update");
+            return ;
+        }
+        AdUnitObject unitObject = DataTable.of(
+                AdUnitIndex.class
+        ).get(keywordTable.getUnitId());
+        if (unitObject == null) {
+            log.error("AdUnitKeywordTable index error: {}", keywordTable.getUnitId());
+            return ;
+        }
+        Set<Long> value = new HashSet<>(
+                Collections.singleton(keywordTable.getUnitId())
+        );
+        handleBinlogEvent(
+                DataTable.of(UnitKeywordIndex.class),
+                keywordTable.getKeyword(),
+                value,
                 type
         );
     }
