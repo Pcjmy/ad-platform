@@ -36,6 +36,7 @@
         <lombok.version>1.18.40</lombok.version>
         <knife4j.version>4.5.0</knife4j.version>
         <fastjson2.version>2.0.53</fastjson2.version>
+        <mysql-binlog-connector.version>0.41.0</mysql-binlog-connector.version>
     </properties>
 
     <dependencyManagement>
@@ -88,6 +89,11 @@
                 <groupId>com.alibaba.fastjson2</groupId>
                 <artifactId>fastjson2</artifactId>
                 <version>${fastjson2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.debezium</groupId>
+                <artifactId>mysql-binlog-connector-java</artifactId>
+                <version>${mysql-binlog-connector.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.adplatform</groupId>

@@ -61,6 +61,12 @@
             <artifactId>druid-spring-boot-4-starter</artifactId>
         </dependency>
 
+        <!-- MySQL Binlog 监听（增量索引更新） -->
+        <dependency>
+            <groupId>io.debezium</groupId>
+            <artifactId>mysql-binlog-connector-java</artifactId>
+        </dependency>
+
         <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
