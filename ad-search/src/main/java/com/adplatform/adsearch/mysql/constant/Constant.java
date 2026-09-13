@@ -36,7 +36,7 @@ public class Constant {
     }
 
     public static class AD_CREATIVE_UNIT_TABLE_INFO {
-        public static final String TABLE_NAME = "create_unit";
+        public static final String TABLE_NAME = "creative_unit";
         public static final String COLUMN_CREATIVE_ID = "creative_id";
         public static final String COLUMN_UNIT_ID = "unit_id";
     }
